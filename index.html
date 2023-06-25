@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <form id="sumForm" action="/calculateSum" method="POST">
+        <label for="size">Size of Array:</label>
+        <input type="number" name="size" id="size" required>
+        <button type="button" onclick="addInputFields()">Add Array Elements</button>
+
+        <div id="arrayInputs"></div>
+
+        <button type="submit">Compute</button>
+    </form>
+
+    <script>
+        function addInputFields() {
+            var size = parseInt(document.getElementById('size').value);
+            var arrayInputsDiv = document.getElementById('arrayInputs');
+            arrayInputsDiv.innerHTML = '';
+
+            for (var i = 0; i < size; i++) {
+                var input = document.createElement('input');
+                input.type = 'number';
+                input.name = 'array[]';
+                input.required = true;
+                arrayInputsDiv.appendChild(input);
+            }
+        }
+    </script>
+
+
+</body>
+
+</html>
