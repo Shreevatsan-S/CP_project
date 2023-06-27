@@ -1,87 +1,91 @@
 #include <stdio.h>
 #include <stdbool.h>
-int main()
-{
-    int n , count=0 , k=0 , a=0;
-    scanf("%d" , &n);
-    int arr[n];
-    
-    for(int i=0 ; i<=n-1 ; i++){
-        scanf("%d" ,&arr[i] );
-    }
-    
-    while(a!=1){
-    bool sta2=true;
-    bool sta1=true;
-    int first_wall;
-    int second_wall;
-    for(int i=k ; i<=n-1 ; i++){
-    if(sta1==true){
-        if(arr[i] != 0 ){
-            first_wall=i;
-            sta1=false;
-        }
-    }
-    }
-    if(sta1==true){
-        a=1;
-    }
-    else{
-        
-    bool zcheck1=true;
-    for(int i=first_wall+1 ; i<=n-1 ; i++){
-        if(arr[i]!=0){
-            zcheck1=false;
-        }
-    }
-    if(zcheck1==true){
-        a=1;
-    }
-    else{
-    second_wall=first_wall;
-    for(int i= first_wall + 1 ; i<= n-1 ; i++){
-        if(sta2==true){
-        if(arr[i]>=arr[second_wall]){
-            second_wall=i;
-            sta2=false;
-        }
-    }
-    }
-    
-    if(sta2==false){
-    int ccount=0;
-    for(int i=first_wall+1; i<=second_wall-1 ; i++){
-    ccount=ccount+arr[i];
-    }
-    int w=second_wall-first_wall-1;
-    count = count + arr[first_wall]*w - ccount;
 
+int main() {
+    int array_size, water_units = 0, current_wall = 0, is_done = 0;
+    scanf("%d", &array_size);
+    int input_array[array_size];
+
+    // Read the array elements from the user
+    for (int i = 0; i < array_size; i++) {
+        scanf("%d", &input_array[i]);
     }
-    
-    else{
-        second_wall=first_wall+1;
-        for(int i = first_wall+1; i<=n-1 ; i++){
-            if(arr[i]>arr[second_wall]){
-                second_wall=i;
+
+    // Find the left and right walls of each block of buildings
+    while (is_done != 1) {
+        bool left_wall_found = false;
+        bool right_wall_found = false;
+        int left_wall;
+        int right_wall;
+
+        // Find the left wall of the current block
+        for (int i = current_wall; i < array_size; i++) {
+            if (left_wall_found == false) {
+                if (input_array[i] != 0) {
+                    left_wall = i;
+                    left_wall_found = true;
+                }
             }
         }
-        int ccount=0;
-    for(int i=first_wall+1; i<=second_wall-1 ; i++){
-    ccount=ccount+arr[i];
-    }
-    int w=second_wall-first_wall-1;
-    count = count + arr[second_wall]*w - ccount;
 
-    }
-    
-    }
-    k=second_wall;
-    if(second_wall==n-1){
-        a=1;
-    }
-}
+        // If no left wall is found, we are done
+        if (left_wall_found == false) {
+            is_done = 1;
+        } 
+        // Find the right wall of the current block
+        else {
+            bool is_all_zeroes = true;
+            for (int i = left_wall + 1; i < array_size; i++) {
+                if (input_array[i] != 0) {
+                    is_all_zeroes = false;
+                }
+            }
 
+            if (is_all_zeroes == true) {
+                is_done = 1;
+            } 
+            else {  
+                right_wall = left_wall;
+                for (int i = left_wall + 1; i < array_size; i++) {
+                    if (right_wall_found == false) {
+                        if (input_array[i] >= input_array[right_wall]) {
+                            right_wall = i;
+                            right_wall_found = true;
+                        }
+                    }
+                }
+
+                // Calculate the amount of water trapped between the walls
+                if (right_wall_found == true) {
+                    int sum = 0;
+                    for (int i = left_wall + 1; i < right_wall; i++) {
+                        sum += input_array[i];
+                    }
+                    int width = right_wall - left_wall - 1;
+                    water_units += input_array[left_wall] * width - sum;
+                } 
+                else {
+                    right_wall = left_wall + 1;
+                    for (int i = left_wall + 1; i < array_size; i++) {
+                        if (input_array[i] > input_array[right_wall]) {
+                            right_wall = i;
+                        }
+                    }
+                    int sum = 0;
+                    for (int i = left_wall + 1; i < right_wall; i++) {
+                        sum += input_array[i];
+                    }
+                    int width = right_wall - left_wall - 1;
+                    water_units += input_array[right_wall] * width - sum;
+                }
+            }
+            current_wall = right_wall;
+            if (right_wall == array_size - 1) {
+                is_done = 1;
+            }
+        }
     }
-        printf("%d" , count);
+    // Print the total amount of water trapped
+    printf("%d", water_units);
     return 0;
 }
