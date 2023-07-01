@@ -7,12 +7,10 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 app.use(express.json());
 
-// Serve the HTML file
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/index.html")
 });
 
-// Handle the form submission
 app.post('/calculateSum', (req, res) => {
   try {
     const { size, array } = req.body;
@@ -51,8 +49,7 @@ app.post('/calculateSum', (req, res) => {
         res.status(500).json({ error: 'An error occurred while calculating the sum.' });
       }
     });
-
-    // Pass the size and array as command line arguments to the C program
+    
     childProcess.stdin.write(`${size}\n`);
     array.forEach((element) => {
       childProcess.stdin.write(`${element}\n`);
@@ -64,12 +61,10 @@ app.post('/calculateSum', (req, res) => {
   }
 });
 
-// Start the server
 app.listen(5000, () => {
   console.log('Server is running on port 5000');
 });
 
-// Add a function to add input fields dynamically
 function addInputFields() {
   var size = parseInt(document.getElementById('size').value);
   var arrayInputsDiv = document.getElementById('arrayInputs');
