@@ -1,12 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+    <title>Array Sum Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+        }
 
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            margin: 20px auto;
+            max-width: 600px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input[type="number"] {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+            margin-bottom: 10px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            background-color: #4CAF50;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+
+        button:hover {
+            background-color: #3e8e41;
+        }
+
+        #arrayInputs {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+        }
+
+        #arrayInputs input[type="number"] {
+            margin-right: 10px;
+            flex-grow: 1;
+            max-width: calc(33.33% - 10px);
+        }
+
+        #result {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            margin: 20px auto;
+            max-width: 600px;
+            text-align: center;
+            font-size: 24px;
+        }
+    </style>
+</head>
 <body>
 
     <form id="sumForm" action="/calculateSum" method="POST">
@@ -18,6 +84,8 @@
 
         <button type="submit">Compute</button>
     </form>
+
+    <div id="result"></div>
 
     <script>
         function addInputFields() {
@@ -35,7 +103,5 @@
         }
     </script>
 
-
 </body>
-
 </html>
