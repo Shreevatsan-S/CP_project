@@ -86,7 +86,7 @@
 
         <div id="arrayInputs"></div>
 
-        <button type="submit" class="btn btn-success">Compute</button>
+        <button type="button" onclick="computeSum()" class="btn btn-success">Compute</button>
     </form>
 
     <div id="result" class="container"></div>
@@ -106,6 +106,26 @@
                 arrayInputsDiv.appendChild(input);
             }
         }
+
+        function computeSum() {
+    const form = document.getElementById('sumForm');
+    const formData = new FormData(form);
+
+    fetch('/calculateSum', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        const resultDiv = document.getElementById('result');
+        resultDiv.innerHTML = `The sum of the array is ${data.result}`;
+    })
+    .catch(error => {
+        console.error(error);
+        const resultDiv = document.getElementById('result');
+        resultDiv.innerHTML = 'An error occurred while calculating the sum.';
+    });
+}
     </script>
 
 </body>
