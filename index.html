@@ -75,58 +75,43 @@
     </style>
 </head>
 <body>
-
-    <form id="sumForm" action="/calculateSum" method="POST" class="container">
-        <h1 class="text-center">Array Sum Calculator</h1>
-        <div class="form-group">
-            <label for="size">Size of Array:</label>
-            <input type="number" name="size" id="size" class="form-control" required>
-        </div>
-        <button type="button" onclick="addInputFields()" class="btn btn-primary">Add Array Elements</button>
-
-        <div id="arrayInputs"></div>
-
-        <button type="button" onclick="computeSum()" class="btn btn-success">Compute</button>
-    </form>
-
-    <div id="result" class="container"></div>
-
+	<h1>Array Water Trapping Calculator</h1>
+	<form id="arrayForm">
+		<label for="size">Array Size:</label>
+		<input type="number" id="size" name="size" required><br><br>
+		<label for="elements">Array Elements:</label>
+		<input type="text" id="elements" name="elements" required><br><br>
+		<button type="submit">Calculate</button>
+	</form>
+	<div id="result"></div>
+	<script src="script.js"></script>
     <script>
-        function addInputFields() {
-            var size = parseInt(document.getElementById('size').value);
-            var arrayInputsDiv = document.getElementById('arrayInputs');
-            arrayInputsDiv.innerHTML = '';
+    const form = document.getElementById('arrayForm');
+const resultDiv = document.getElementById('result');
 
-            for (var i = 0; i < size; i++) {
-                var input = document.createElement('input');
-                input.type = 'number';
-                input.name = 'array[]';
-                input.required = true;
-                input.classList.add('form-control');
-                arrayInputsDiv.appendChild(input);
-            }
-        }
+form.addEventListener('submit', (event) => {
+	event.preventDefault();
+	const size = document.getElementById('size').value;
+	const elements = document.getElementById('elements').value;
+	const array = elements.split(',').map(Number);
 
-        function computeSum() {
-    const form = document.getElementById('sumForm');
-    const formData = new FormData(form);
-
-    fetch('/calculateSum', {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        const resultDiv = document.getElementById('result');
-        resultDiv.innerHTML = `The sum of the array is ${data.result}`;
-    })
-    .catch(error => {
-        console.error(error);
-        const resultDiv = document.getElementById('result');
-        resultDiv.innerHTML = 'An error occurred while calculating the sum.';
-    });
-}
+	fetch('/calculate', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({ size, array })
+	})
+	.then(response => response.json())
+	.then(data => {
+		resultDiv.innerHTML = `The amount of water trapped is ${data.result}`;
+	})
+	.catch(error => {
+		console.error(error);
+		resultDiv.innerHTML = 'An error occurred while calculating the amount of water trapped';
+	});
+});
     </script>
-
 </body>
+    
 </html>
