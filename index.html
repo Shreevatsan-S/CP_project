@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Array Sum Calculator</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -75,17 +76,20 @@
 </head>
 <body>
 
-    <form id="sumForm" action="/calculateSum" method="POST">
-        <label for="size">Size of Array:</label>
-        <input type="number" name="size" id="size" required>
-        <button type="button" onclick="addInputFields()">Add Array Elements</button>
+    <form id="sumForm" action="/calculateSum" method="POST" class="container">
+        <h1 class="text-center">Array Sum Calculator</h1>
+        <div class="form-group">
+            <label for="size">Size of Array:</label>
+            <input type="number" name="size" id="size" class="form-control" required>
+        </div>
+        <button type="button" onclick="addInputFields()" class="btn btn-primary">Add Array Elements</button>
 
         <div id="arrayInputs"></div>
 
-        <button type="submit">Compute</button>
+        <button type="submit" class="btn btn-success">Compute</button>
     </form>
 
-    <div id="result"></div>
+    <div id="result" class="container"></div>
 
     <script>
         function addInputFields() {
@@ -98,6 +102,7 @@
                 input.type = 'number';
                 input.name = 'array[]';
                 input.required = true;
+                input.classList.add('form-control');
                 arrayInputsDiv.appendChild(input);
             }
         }
