@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Water Units Calculator</title>
+    <style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+    
+    h1 {
+        text-align: center;
+    }
+    
+    form {
+        width: 50%;
+        margin: 0 auto;
+    }
+    
+    label {
+        display: inline-block;
+        width: 100px;
+        text-align: right;
+        margin-right: 10px;
+    }
+    
+    input[type="text"] {
+        width: 200px;
+    }
+    
+    input[type="submit"] {
+        margin-left: 110px;
+    }
+    
+    #result {
+        margin-top: 20px;
+        font-size: 18px;
+        text-align: center;
+    }
+    </style>
+	<script>
+		function validateForm() {
+			var arraySize = document.forms["waterUnitsForm"]["arraySize"].value;
+			var elements = document.forms["waterUnitsForm"]["elements"].value;
+			if (arraySize == "" || elements == "") {
+				alert("Please fill in all fields.");
+				return false;
+			}
+			if (isNaN(arraySize)) {
+				alert("Array size must be a number.");
+				return false;
+			}
+			var elementArray = elements.split(" ");
+			if (elementArray.length != arraySize) {
+				alert("Number of elements must match array size.");
+				return false;
+			}
+			for (var i = 0; i < elementArray.length; i++) {
+				if (isNaN(elementArray[i])) {
+					alert("Elements must be numbers.");
+					return false;
+				}
+			}
+			return true;
+		}
+	</script>
+</head>
+<body>
+	<h1>Water Units Calculator</h1>
+	<form name="waterUnitsForm" onsubmit="return validateForm()" method="post">
+		<label for="arraySize">Array Size:</label>
+		<input type="text" id="arraySize" name="arraySize"><br><br>
+		<label for="elements">Elements:</label>
+		<input type="text" id="elements" name="elements"><br><br>
+		<input type="submit" value="Calculate">
+	</form>
+	<div id="result"></div>
+</body>
+
+<script>
+    var resultDiv = document.getElementById("result");
+resultDiv.innerHTML = "Water Units: " + waterUnits;
+</script>
+</html>
