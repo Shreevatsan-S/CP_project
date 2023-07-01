@@ -64,6 +64,23 @@ app.post('/calculateSum', (req, res) => {
   }
 });
 
+// Start the server
 app.listen(5000, () => {
   console.log('Server is running on port 5000');
 });
+
+// Add a function to add input fields dynamically
+function addInputFields() {
+  var size = parseInt(document.getElementById('size').value);
+  var arrayInputsDiv = document.getElementById('arrayInputs');
+  arrayInputsDiv.innerHTML = '';
+
+  for (var i = 0; i < size; i++) {
+    var input = document.createElement('input');
+    input.type = 'number';
+    input.name = 'array[]';
+    input.required = true;
+    input.classList.add('form-control');
+    arrayInputsDiv.appendChild(input);
+  }
+}
