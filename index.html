@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Array Sum Calculator</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <canvas id="myChart"></canvas>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -126,7 +128,43 @@
         resultDiv.innerHTML = 'An error occurred while calculating the sum.';
     });
 }
-    </script>
+        
+  function createChart() {
+    var array = document.getElementsByName('array[]');
+    var data = [];
+    var labels = [];
+
+    for (var i = 0; i < array.length; i++) {
+      data.push(parseInt(array[i].value));
+      labels.push('Element ' + (i + 1));
+    }
+
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Array Elements',
+          data: data,
+          backgroundColor: 'rgba(54, 162, 235, 0.2)',
+          borderColor: 'rgba(54, 162, 235, 1)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        }
+      }
+    });
+  }
+        <button type="button" onclick="computeSum(); createChart();" class="btn btn-success">Compute</button>
+</script>
 
 </body>
 </html>
