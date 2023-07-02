@@ -108,27 +108,24 @@
         }
 
         function computeSum() {
-            var inputs = document.getElementsByName('array[]');
-            var array = [];
-            for (var i = 0; i < inputs.length; i++) {
-                array.push(parseInt(inputs[i].value));
-            }
-            var sum = array.reduce((a, b) => a + b, 0);
-            var xhr = new XMLHttpRequest();
-            xhr.open('POST', '/calculateSum', true);
-            xhr.setRequestHeader('Content-Type', 'application/json');
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === 4 && xhr.status === 200) {
-                    var resultDiv = document.getElementById('result');
-                    resultDiv.innerHTML = `
-                        <div class="alert alert-success" role="alert">
-                            The sum of the array is ${sum}
-                        </div>
-                    `;
-                }
-            };
-            xhr.send(JSON.stringify({ sum: sum }));
-        }
+    const form = document.getElementById('sumForm');
+    const formData = new FormData(form);
+
+    fetch('/calculateSum', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        const resultDiv = document.getElementById('result');
+        resultDiv.innerHTML = `The sum of the array is ${data.result}`;
+    })
+    .catch(error => {
+        console.error(error);
+        const resultDiv = document.getElementById('result');
+        resultDiv.innerHTML = 'An error occurred while calculating the sum.';
+    });
+}
     </script>
 
 </body>
